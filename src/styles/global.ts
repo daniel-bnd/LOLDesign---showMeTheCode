@@ -1,21 +1,15 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
   }
 
   body {
-    background: #FFF;
+    font: 400 16px Roboto, sans-serif;
     color: #000;
-    font: 400 1.6rem Roboto, sans-serif;
   }
-
-  @media (max-width: 768px) {
-    html {
-      font-size: 40%;
-    }
-  }
-`;
+`
