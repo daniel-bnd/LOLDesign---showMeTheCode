@@ -14,9 +14,9 @@ const Home: NextPage = () => {
         <S.Title>Planos FaleMais da Telzir</S.Title>
 
         <S.CardContainer>
-          <PlanCard minutes={30} price={30} quantity="mensal" />
-          <PlanCard minutes={60} price={49} quantity="anual" center={true} />
-          <PlanCard minutes={120} price={99} quantity="anual" />
+          <PlanCard minutes={30} price={29} quantity="mensal" />
+          <PlanCard minutes={60} price={59} quantity="anual" center={true} />
+          <PlanCard minutes={120} price={119} quantity="anual" />
         </S.CardContainer>
 
         <S.CardContainer>

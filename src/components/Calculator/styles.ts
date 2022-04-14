@@ -39,7 +39,8 @@ export const Text = styled.p`
 `
 
 export const Box = styled.div`
-  max-width: 28.6vw;
+  width: 28.6vw;
+  max-width: 500px;
   min-width: 500px;
   min-height: 185px;
   margin-top: 15px;
@@ -47,6 +48,7 @@ export const Box = styled.div`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   padding: 0 20px 20px;
+  overflow: hidden;
 
   @media (max-width: 1070px) {
     width: 80vw;
@@ -202,6 +204,10 @@ export const Button = styled.button`
 
   font: 600 14px/16px Roboto, sans-serif;
   color: #fff;
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 export const FormResult = styled.div`
@@ -213,11 +219,17 @@ export const FormResult = styled.div`
 
 export const ResultGray = styled.div`
   color: ${props => props.theme.colors.gray};
+  text-align: center;
 `
 
 export const ResultPrimary = styled(ResultGray)`
   color: ${props => props.theme.colors.primary};
   margin-left: 60px;
+  text-align: center;
+
+  @media (max-width: 550px) {
+    margin-left: 20px;
+  }
 `
 
 export const ResultTitle = styled.span`
@@ -233,11 +245,16 @@ export const Result = styled.div`
 
 export const ResultCurrency = styled.span`
   font: 600 16px/18px Roboto, sans-serif;
+  text-align: center;
 `
 
 export const ResultValue = styled(ResultCurrency)`
   font-size: 48px;
   line-height: 36px;
+
+  @media (max-width: 550px) {
+    font-size: 40px;
+  }
 `
 
 export const ResultCents = styled(ResultCurrency)``
