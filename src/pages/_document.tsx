@@ -42,6 +42,10 @@ export default class MyDocument extends Document {
       <Html lang="pt">
         <Head>
           <meta charSet="utf-8" />
+          <link
+            rel="shortcut icon"
+            href="https://www.loldesign.com.br/wp-content/uploads/2015/12/lol_favicon.ico"
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
@@ -49,7 +53,7 @@ export default class MyDocument extends Document {
             crossOrigin="true"
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;700;900&display=swap"
             rel="stylesheet"
           />
           <link

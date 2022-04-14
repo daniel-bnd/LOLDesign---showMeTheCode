@@ -6,12 +6,13 @@ import * as S from './styles'
 const Header: NextPage = () => {
   const router = useRouter()
   const [navBarSize, setNavBarSize] = useState('normal')
+  const [isMenuActive, setisMenuActive] = useState(false)
 
   if (typeof window !== 'undefined') {
     let prevScrollpos = window.pageYOffset
     window.onscroll = function () {
       let currentScrollPos = window.pageYOffset
-      if (prevScrollpos > 98) {
+      if (prevScrollpos > 166) {
         setNavBarSize('small')
       } else {
         setNavBarSize('normal')
@@ -51,9 +52,16 @@ const Header: NextPage = () => {
         </S.Content>
       </S.ActionBar>
 
-      <S.TopBar size={navBarSize}>
+      <S.TopBarPlaceHolder size={navBarSize} />
+      <S.TopBar size={navBarSize} isMenuActive={isMenuActive}>
         <S.Content>
           <S.Logo src="/Logo.png" alt="logo LOLDesign" size={navBarSize} />
+          <S.MobileMenu
+            onClick={() => setisMenuActive(!isMenuActive)}
+            status={isMenuActive ? 'open' : 'close'}
+          >
+            <S.MobileMenuLines />
+          </S.MobileMenu>
           <S.Menu size={navBarSize}>
             <ul>
               <li className={router.pathname == '/home' ? 'active' : ''}>
@@ -68,8 +76,16 @@ const Header: NextPage = () => {
               </li>
               <li>
                 <a href="#pll_switcher">
-                  <S.BrazilFlag />
-                  <S.MenuText>Português</S.MenuText>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <S.BrazilFlag />
+                    <S.MenuText>Português</S.MenuText>
+                  </div>
                 </a>
               </li>
             </ul>

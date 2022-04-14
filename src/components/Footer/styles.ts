@@ -12,22 +12,37 @@ export const Container = styled.footer`
   width: 100%;
   height: 83px;
   background: #737373;
+
+  @media (max-width: 550px) {
+    height: 100px;
+    padding: 20px 0;
+  }
 `
 
 export const Content = styled.div`
-  width: 1194px;
+  max-width: 1200px;
   height: 100%;
   margin: 0 auto;
+  padding: 0 6px;
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 550px) {
+    font-size: 12px;
+    flex-direction: column;
+  }
 `
 
 export const Text = styled.span`
   font: 300 15px/18px Roboto, sans-serif;
   color: #cccccc;
+
+  @media (max-width: 550px) {
+    font-size: 12px;
+  }
 `
 
 export const Social = styled.div`
@@ -37,6 +52,10 @@ export const Social = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 550px) {
+    margin: 15px 0;
+  }
 `
 
 export const LinkStyled = styled.a`

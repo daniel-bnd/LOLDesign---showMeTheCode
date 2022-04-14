@@ -11,17 +11,24 @@ export const Container = styled.header`
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: 99;
 `
 
 export const Content = styled.div`
-  width: 1194px;
+  max-width: 1200px;
   height: 100%;
   margin: 0 auto;
+  padding: 0 6px;
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `
 
 //---------------------ActionBar------------------------
@@ -30,6 +37,13 @@ export const ActionBar = styled.div`
   width: 100%;
   height: 46px;
   background: #2c2c2c;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #0c0c0c;
+  }
 `
 
 export const Contact = styled.div`
@@ -60,6 +74,10 @@ export const Social = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+  }
 `
 
 export const LinkStyled = styled.a`
@@ -82,42 +100,111 @@ export const IG = styled(igSVG)``
 
 type TopBarProps = {
   size: string
+  isMenuActive?: boolean
 }
+
+export const TopBarPlaceHolder = styled.div<TopBarProps>`
+  @media (min-width: 769px) {
+    ${props =>
+      props.size === 'small' &&
+      css`
+        height: 120px;
+      `}
+  }
+`
 
 export const TopBar = styled.div<TopBarProps>`
   width: 100%;
   height: 120px;
   background: #0c0c0c;
+  transition: height 0.5s ease;
 
-  ${props =>
-    props.size === 'small' &&
-    css`
-      height: 0;
-      top: 0;
-      position: fixed;
-      overflow: hidden;
-      animation: changeHeight 0.7s forwards;
-    `}
+  @media (min-width: 769px) {
+    ${props =>
+      props.size === 'small' &&
+      css`
+        height: 0;
+        top: 0;
+        position: fixed;
+        overflow: hidden;
+        animation: changeHeight 0.7s forwards;
+      `}
 
-  @keyframes changeHeight {
-    100% {
-      height: 60px;
-      overflow: visible;
+    @keyframes changeHeight {
+      100% {
+        height: 60px;
+        overflow: visible;
+      }
     }
+  }
+
+  @media (max-width: 768px) {
+    height: 90px;
+    overflow: hidden;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+
+    ${props =>
+      props.isMenuActive === true &&
+      css`
+        height: 240px;
+      `}
   }
 `
 
 export const Logo = styled.img<TopBarProps>`
-  ${props =>
-    props.size === 'normal' &&
-    css`
-      width: 134px;
-    `}
+  width: 134px;
   ${props =>
     props.size === 'small' &&
     css`
       width: 78px;
     `}
+
+  @media (max-width: 768px) {
+    margin: 0 auto 10px auto;
+  }
+`
+
+export const MobileMenuLines = styled.div`
+  width: 22px;
+  height: 1px;
+  background: ${props => props.theme.colors.primary};
+  box-shadow: 0 2px 5px rgba(241, 99, 15, 0.2);
+  transition: all 0.5s ease-in-out;
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 1px;
+    background: ${props => props.theme.colors.primary};
+    box-shadow: 0 2px 5px rgba(241, 99, 15, 0.2);
+    transition: all 0.5s ease-in-out;
+  }
+  &:before {
+    transform: translateY(-7px);
+  }
+  &:after {
+    transform: translateY(7px);
+  }
+`
+
+type MobileMenuProps = {
+  status: string
+}
+
+export const MobileMenu = styled.div<MobileMenuProps>`
+  display: none;
+  position: absolute;
+  width: 50px;
+  height: 31px;
+  right: -10px;
+  top: 30px;
+  transition: all 0.5s ease-in-out;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 `
 
 export const Menu = styled.nav<TopBarProps>`
@@ -134,54 +221,48 @@ export const Menu = styled.nav<TopBarProps>`
     &:hover {
       color: ${props => props.theme.colors.primary};
     }
+    padding: 50px 25px;
 
-    ${props =>
-      props.size === 'normal' &&
-      css`
-        padding: 50px 25px;
-      `}
-
-    ${props =>
-      props.size === 'small' &&
-      css`
-        padding: 18px 25px;
-      `}
+    @media (min-width: 769px) {
+      ${props =>
+        props.size === 'small' &&
+        css`
+          padding: 18px 25px;
+        `}
+    }
   }
 
   li {
-    ${props =>
-      props.size === 'normal' &&
-      css`
-        ::before {
-          content: '';
-          opacity: 0;
-          width: 100%;
-          height: 4px;
-          background: ${props => props.theme.colors.primary};
-          left: 0;
-          position: relative;
-          display: block;
-          top: -4px;
-          transition: opacity 0.3s ease-in-out;
-        }
-      `}
-
-    ${props =>
-      props.size === 'small' &&
-      css`
-        ::after {
-          content: '';
-          opacity: 0;
-          width: 100%;
-          height: 4px;
-          background: ${props => props.theme.colors.primary};
-          left: 0;
-          position: relative;
-          display: block;
-          bottom: -4px;
-          transition: opacity 0.3s ease-in-out;
-        }
-      `}
+    @media (min-width: 769px) {
+      ::before {
+        content: '';
+        opacity: 0;
+        width: 100%;
+        height: 4px;
+        background: ${props => props.theme.colors.primary};
+        left: 0;
+        position: relative;
+        display: block;
+        top: -4px;
+        transition: opacity 0.3s ease-in-out;
+      }
+      ${props =>
+        props.size === 'small' &&
+        css`
+          ::after {
+            content: '';
+            opacity: 0;
+            width: 100%;
+            height: 4px;
+            background: ${props => props.theme.colors.primary};
+            left: 0;
+            position: relative;
+            display: block;
+            top: 2px;
+            transition: opacity 0.3s ease-in-out;
+          }
+        `}
+    }
     &:hover {
       ::before {
         opacity: 1;
@@ -201,6 +282,20 @@ export const Menu = styled.nav<TopBarProps>`
     }
     ::after {
       opacity: 1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    ul li {
+      display: block;
+    }
+
+    li {
+      width: 100%;
+    }
+
+    a {
+      padding: 12px 600px 12px 20px;
     }
   }
 `
