@@ -15,18 +15,11 @@ const Calculator: NextPage = () => {
   )
 
   function calcValues() {
-    const plan = parseInt(planValue)
-    const minutes: any = parseInt(minutesValue)
-
-    const origin011to016 = 1.9
-    const origin011to017 = 1.7
-    const origin011to018 = 0.9
-    const origin016to011 = 2.9
-    const origin017to011 = 2.7
-    const origin018to011 = 1.9
+    const Minutes: number = parseInt(minutesValue)
+    const PlanValue: number = parseInt(planValue)
     const surcharge = 0.1 //10%
 
-    const formatter = (amount: number) => {
+    function formatter(amount: number) {
       if (amount < 10) {
         return '0' + amount.toFixed(2)
       } else {
@@ -34,63 +27,43 @@ const Calculator: NextPage = () => {
       }
     }
 
-    function semFaleMais(origin: number) {
-      const data = origin * minutes
-      setSemFaleMaisValue(formatter(data))
-      console.log({ semFaleMaisValue })
-    }
+    function setPrice(price: number) {
+      setSemFaleMaisValue(formatter(price * Minutes))
 
-    function comFaleMais(origin: number) {
-      if (minutes > plan) {
-        const data = (minutes - plan) * (origin + origin * surcharge)
-        setComFaleMaisValue(formatter(data))
+      if (Minutes > PlanValue) {
+        setComFaleMaisValue(
+          formatter((Minutes - PlanValue) * (price + price * surcharge))
+        )
       } else {
         setComFaleMaisValue('00,00')
       }
-      console.log({ comFaleMaisValue })
     }
 
-    function invalidDestiny() {
-      alert('Destino inválido')
-    }
-
-    if (originValue === 'origin011') {
-      if (destinyValue === 'destiny016') {
-        semFaleMais(origin011to016)
-        comFaleMais(origin011to016)
-      } else if (destinyValue === 'destiny017') {
-        semFaleMais(origin011to017)
-        comFaleMais(origin011to017)
-      } else if (destinyValue === 'destiny018') {
-        semFaleMais(origin011to018)
-        comFaleMais(origin011to018)
-      } else {
-        invalidDestiny()
-      }
-    }
-    if (originValue === 'origin016') {
-      if (destinyValue === 'destiny011') {
-        semFaleMais(origin016to011)
-        comFaleMais(origin016to011)
-      } else {
-        invalidDestiny()
-      }
-    }
-    if (originValue === 'origin017') {
-      if (destinyValue === 'destiny011') {
-        semFaleMais(origin017to011)
-        comFaleMais(origin017to011)
-      } else {
-        invalidDestiny()
-      }
-    }
-    if (originValue === 'origin018') {
-      if (destinyValue === 'destiny011') {
-        semFaleMais(origin018to011)
-        comFaleMais(origin018to011)
-      } else {
-        invalidDestiny()
-      }
+    switch (`${originValue}to${destinyValue}`) {
+      case '011to016':
+        setPrice(1.9)
+        break
+      case '011to017':
+        setPrice(1.7)
+        break
+      case '011to018':
+        setPrice(0.9)
+        break
+      case '016to011':
+        setPrice(2.9)
+        break
+      case '016to017':
+        setPrice(2.1)
+        break
+      case '017to011':
+        setPrice(2.7)
+        break
+      case '018to011':
+        setPrice(1.9)
+        break
+      default:
+        alert('Destino inválido')
+        break
     }
   }
 
@@ -128,10 +101,10 @@ const Calculator: NextPage = () => {
               <option value="default" disabled hidden>
                 Origem
               </option>
-              <option value="origin011">011</option>
-              <option value="origin016">016</option>
-              <option value="origin017">017</option>
-              <option value="origin018">018</option>
+              <option value="011">011</option>
+              <option value="016">016</option>
+              <option value="017">017</option>
+              <option value="018">018</option>
             </S.SelectSmall>
             <S.SelectSmall
               name="destiny"
@@ -142,10 +115,10 @@ const Calculator: NextPage = () => {
               <option value="default" disabled hidden>
                 Destino
               </option>
-              <option value="destiny011">011</option>
-              <option value="destiny016">016</option>
-              <option value="destiny017">017</option>
-              <option value="destiny018">018</option>
+              <option value="011">011</option>
+              <option value="016">016</option>
+              <option value="017">017</option>
+              <option value="018">018</option>
             </S.SelectSmall>
             <S.CustomInput>
               <input
