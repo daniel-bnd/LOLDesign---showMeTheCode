@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import * as S from './styles'
 
 const Calculator: NextPage = () => {
+  const [minutesValue, setMinutesValue] = useState('')
   const [planValue, setPlanValue] = useState<string>('default')
   const [originValue, setOriginValue] = useState('default')
   const [destinyValue, setDestinyValue] = useState('default')
-  const [minutesValue, setMinutesValue] = useState('')
   const [semFaleMaisValue, setSemFaleMaisValue] = useState<string | number>(
     '00,00'
   )
@@ -14,12 +14,18 @@ const Calculator: NextPage = () => {
     '00,00'
   )
 
-  function calcValues() {
-    const Minutes: number = parseInt(minutesValue)
-    const PlanValue: number = parseInt(planValue)
-    const surcharge = 0.1 //10%
+  class Calculator {
+    private minutes: number
+    private planValue: number
+    private surcharge: number
 
-    function formatter(amount: number) {
+    constructor(minutes: string, planValue: string, surcharge: number) {
+      this.minutes = parseInt(minutes)
+      this.planValue = parseInt(planValue)
+      this.surcharge = surcharge
+    }
+
+    private formatter(amount: number) {
       if (amount < 10) {
         return '0' + amount.toFixed(2)
       } else {
@@ -27,49 +33,56 @@ const Calculator: NextPage = () => {
       }
     }
 
-    function setPrice(price: number) {
-      setSemFaleMaisValue(formatter(price * Minutes))
+    private setPrice(price: number) {
+      setSemFaleMaisValue(this.formatter(price * this.minutes))
 
-      if (Minutes > PlanValue) {
+      if (this.minutes > this.planValue) {
         setComFaleMaisValue(
-          formatter((Minutes - PlanValue) * (price + price * surcharge))
+          this.formatter(
+            (this.minutes - this.planValue) * (price + price * this.surcharge)
+          )
         )
       } else {
         setComFaleMaisValue('00,00')
       }
     }
 
-    switch (`${originValue}to${destinyValue}`) {
-      case '011to016':
-        setPrice(1.9)
-        break
-      case '011to017':
-        setPrice(1.7)
-        break
-      case '011to018':
-        setPrice(0.9)
-        break
-      case '016to011':
-        setPrice(2.9)
-        break
-      case '016to017':
-        setPrice(2.1)
-        break
-      case '017to011':
-        setPrice(2.7)
-        break
-      case '018to011':
-        setPrice(1.9)
-        break
-      default:
-        alert('Destino inválido')
-        break
+    calcValues(originValue: string, destinyValue: string) {
+      switch (`${originValue}to${destinyValue}`) {
+        case '011to016':
+          this.setPrice(1.9)
+          break
+        case '011to017':
+          this.setPrice(1.7)
+          break
+        case '011to018':
+          this.setPrice(0.9)
+          break
+        case '016to011':
+          this.setPrice(2.9)
+          break
+        case '016to017':
+          this.setPrice(2.1)
+          break
+        case '017to011':
+          this.setPrice(2.7)
+          break
+        case '018to011':
+          this.setPrice(1.9)
+          break
+        default:
+          alert('Destino inválido')
+          break
+      }
     }
   }
 
+  const surcharge = 0.1 // 10%
+  const calculator = new Calculator(minutesValue, planValue, surcharge)
+
   function handleSubmitForm(e: any) {
     e.preventDefault()
-    calcValues()
+    calculator.calcValues(originValue, destinyValue)
   }
 
   return (
